@@ -3,6 +3,7 @@ package finki.emt.emt_lv1_201115.web;
 import finki.emt.emt_lv1_201115.model.domain.Author;
 import finki.emt.emt_lv1_201115.model.domain.Book;
 import finki.emt.emt_lv1_201115.model.dto.BookDto;
+import finki.emt.emt_lv1_201115.model.enumeration.Category;
 import finki.emt.emt_lv1_201115.repository.BookRepository;
 import finki.emt.emt_lv1_201115.service.BookService;
 import org.springframework.data.domain.Page;
@@ -10,12 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/api/book")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
 
     private final BookService bookService;
@@ -41,7 +44,7 @@ public class BookController {
         return this.bookService.findAllPageable(pageable);
     }
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<Book> addBook(@RequestBody BookDto bookDto){
         return this.bookService.add(bookDto)
                 .map(book -> ResponseEntity.ok().body(book))
@@ -58,17 +61,22 @@ public class BookController {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Book> editBook(@PathVariable Long id, @RequestBody BookDto bookDto){
         return this.bookService.edit(id, bookDto)
                 .map(book -> ResponseEntity.ok().body(book))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @GetMapping("/markAsRented/{id}")
+    @PostMapping("/markAsRented/{id}")
     public ResponseEntity<Book> markBookAsRented(@PathVariable Long id){
         return this.bookService.markAsRented(id)
                 .map(book -> ResponseEntity.ok().body(book))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @GetMapping("/categories")
+    public List<Category> categories(){
+        return Arrays.stream(Category.values()).toList();
     }
 }

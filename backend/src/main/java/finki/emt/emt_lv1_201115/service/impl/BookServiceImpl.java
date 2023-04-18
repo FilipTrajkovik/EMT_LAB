@@ -66,12 +66,13 @@ public class BookServiceImpl implements BookService {
     public Optional<Book> edit(Long id, BookDto bookDto) {
         Author author = this.authorRepository.findById(bookDto.getAuthorId())
                 .orElseThrow(()-> new InvalidBookIdException(bookDto.getAuthorId()));
-        Book book = new Book(bookDto.getName(), bookDto.getCategory(), author, bookDto.getAvailableCopies());
+        Book book = this.bookRepository.findById(id)
+                .orElseThrow(() -> new InvalidBookIdException(id));
 
-        book.setName(book.getName());
-        book.setCategory(book.getCategory());
+        book.setName(bookDto.getName());
+        book.setCategory(bookDto.getCategory());
         book.setAuthor(author);
-        book.setAvailableCopies(book.getAvailableCopies());
+        book.setAvailableCopies(bookDto.getAvailableCopies());
 
         return Optional.of(bookRepository.save(book));
     }

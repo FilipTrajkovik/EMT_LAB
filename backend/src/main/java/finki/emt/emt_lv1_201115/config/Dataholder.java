@@ -51,9 +51,27 @@ public class Dataholder {
         Book book1 = new Book("Book1", Category.CLASSICS, author1, 10);
         Book book2 = new Book("Book2", Category.NOVEL, author2, 20);
         Book book3 = new Book("Book3", Category.THRILLER, author3, 30);
+        Book book4 = new Book("Book4", Category.CLASSICS, author1, 40);
+        Book book5 = new Book("Book5", Category.NOVEL, author2, 50);
+        Book book6 = new Book("Book6", Category.THRILLER, author3, 60);
+        Book book7 = new Book("Book7", Category.CLASSICS, author1, 70);
+        Book book8 = new Book("Book8", Category.NOVEL, author2, 80);
+        Book book9 = new Book("Book9", Category.THRILLER, author3, 90);
+        Book book10 = new Book("Book10", Category.CLASSICS, author1, 100);
+        Book book11 = new Book("Book11", Category.NOVEL, author2, 110);
+        Book book12 = new Book("Book12", Category.THRILLER, author3, 120);
         books.add(book1);
         books.add(book2);
         books.add(book3);
+        books.add(book4);
+        books.add(book5);
+        books.add(book6);
+        books.add(book7);
+        books.add(book8);
+        books.add(book9);
+        books.add(book10);
+        books.add(book11);
+        books.add(book12);
         bookRepository.saveAll(books);
     }
 }
